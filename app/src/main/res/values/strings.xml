@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">RentReady</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_reservations">Reservations</string>
+    <string name="nav_rentals">Rentals</string>
+    <string name="nav_profile">Profile</string>
+
+    <!-- Home -->
+    <string name="header_equipment_rental">EQUIPMENT RENTAL</string>
+    <string name="app_title">RentReady</string>
+    <string name="search_hint">Search equipment</string>
+    <string name="category_cameras">Cameras</string>
+    <string name="category_audio">Audio</string>
+    <string name="category_computers">Computers</string>
+    <string name="equipment_section">Equipment</string>
+    <string name="equipment_label">EQUIPMENT</string>
+
+    <!-- Details -->
+    <string name="details_title">Equipment Details</string>
+    <string name="equipment_image">EQUIPMENT IMAGE</string>
+    <string name="details_category">CAMERAS</string>
+    <string name="details_name">Mirrorless Camera</string>
+    <string name="status_available">Available</string>
+    <string name="details_description_label">DESCRIPTION</string>
+    <string name="details_description">Lightweight camera for student projects.</string>
+    <string name="rental_information">RENTAL INFORMATION</string>
+    <string name="select_dates">Select dates on the next step</string>
+    <string name="reserve_button">RESERVE</string>
+    <string name="toast_reservation_started">Reservation request started</string>
+
+    <!-- Reservations -->
+    <string name="header_your_account">YOUR ACCOUNT</string>
+    <string name="reservations_title">My Reservations</string>
+    <string name="current_reservations">Current reservations</string>
+    <string name="status_label">Status: </string>
+    <string name="status_reserved">Reserved</string>
+    <string name="cancel_button">CANCEL</string>
+    <string name="toast_reservation_cancelled">Reservation cancelled</string>
+    <string name="reservations_hint">Need something else? Browse the equipment catalogue from Home.</string>
+
+    <!-- Rentals -->
+    <string name="rentals_title">My Rentals</string>
+    <string name="rentals_empty">No active rentals.</string>
+
+    <!-- Profile -->
+    <string name="profile_title">Profile</string>
+    <string name="profile_name">Name: Sample Student</string>
+    <string name="profile_email">Email: student@example.com</string>
+    <string name="profile_student_id">Student ID: 100000000</string>
+    <string name="logout_button">LOGOUT</string>
+    <string name="toast_logged_out">Logged out</string>
+    <string name="title_activity_app_data">AppData</string>
+    <string name="title_activity_components">Components</string>
+    <string name="title_activity_home_screen">HomeScreen</string>
+</resources>
