@@ -51,6 +51,9 @@ fun RentReadyApp() {
                     onEquipmentClick = { currentScreen = Screen.DETAILS },
                     onProfileClick = { currentScreen = Screen.PROFILE }
                 )
+                Screen.DETAILS -> DetailsScreen(
+                    onBack = { currentScreen = Screen.HOME }
+                )
                 // screens not built yet temporary placeholder
                 else -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Text("Coming soon")

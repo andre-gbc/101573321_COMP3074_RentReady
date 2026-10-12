@@ -41,6 +41,12 @@
             android:label="@string/title_activity_home_screen"
             android:theme="@style/Theme.RentReady"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".DetailsScreen"
+            android:exported="false"
+            android:label="@string/title_activity_details_screen"
+            android:theme="@style/Theme.RentReady"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
