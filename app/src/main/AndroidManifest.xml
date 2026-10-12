@@ -47,6 +47,24 @@
             android:label="@string/title_activity_details_screen"
             android:theme="@style/Theme.RentReady"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ReservationsScreen"
+            android:exported="false"
+            android:label="@string/title_activity_reservations_screen"
+            android:theme="@style/Theme.RentReady"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".RentalsScreen"
+            android:exported="false"
+            android:label="@string/title_activity_rentals_screen"
+            android:theme="@style/Theme.RentReady"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ProfileScreen"
+            android:exported="false"
+            android:label="@string/title_activity_profile_screen"
+            android:theme="@style/Theme.RentReady"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

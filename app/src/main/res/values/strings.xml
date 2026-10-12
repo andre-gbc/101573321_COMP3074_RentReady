@@ -55,4 +55,7 @@
     <string name="title_activity_components">Components</string>
     <string name="title_activity_home_screen">HomeScreen</string>
     <string name="title_activity_details_screen">DetailsScreen</string>
+    <string name="title_activity_reservations_screen">ReservationsScreen</string>
+    <string name="title_activity_rentals_screen">RentalsScreen</string>
+    <string name="title_activity_profile_screen">ProfileScreen</string>
 </resources>

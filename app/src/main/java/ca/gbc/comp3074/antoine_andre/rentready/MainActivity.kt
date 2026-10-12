@@ -8,9 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import ca.gbc.comp3074.antoine_andre.rentready.ui.theme.RentReadyTheme
@@ -27,16 +25,24 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-// root composable: state and switches screens
+// Root composable holds state and switches screens
 @Composable
 fun RentReadyApp() {
-    // Which screen is showing (simple state instead of Navigation Compose)
     var currentScreen by remember { mutableStateOf(Screen.HOME) }
+
+    // reservation list here so "cancel" can remove items
+    val reservations = remember {
+        mutableStateListOf(
+            Reservation("DSLR Camera", "Oct 12–14, 2026", "📷"),
+            Reservation("Tripod", "Oct 12–14, 2026", "📐")
+        )
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         containerColor = AppBackground,
         bottomBar = {
+            // details screen has no bottom bar
             if (currentScreen != Screen.DETAILS) {
                 AppBottomBar(
                     selected = currentScreen,
@@ -54,10 +60,9 @@ fun RentReadyApp() {
                 Screen.DETAILS -> DetailsScreen(
                     onBack = { currentScreen = Screen.HOME }
                 )
-                // screens not built yet temporary placeholder
-                else -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text("Coming soon")
-                }
+                Screen.RESERVATIONS -> ReservationsScreen(reservations)
+                Screen.RENTALS -> RentalsScreen()
+                Screen.PROFILE -> ProfileScreen()
             }
         }
     }
