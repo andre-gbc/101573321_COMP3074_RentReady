@@ -19,17 +19,49 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 // 1. Home / Equipment Catalogue
 @Composable
-fun HomeScreen(onEquipmentClick: () -> Unit, onProfileClick: () -> Unit) {
+fun HomeScreen(
+    localNetworkGranted: Boolean,
+    onRequestPermission: () -> Unit,
+    onEquipmentClick: () -> Unit,
+    onProfileClick: () -> Unit
+) {
     var searchText by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf("Cameras") }
 
+    var equipment by remember { mutableStateOf<List<Equipment>>(emptyList()) }
+    var isLoading by remember { mutableStateOf(false) }
+    var loadFailed by remember { mutableStateOf(false) }
+    var retryCount by remember { mutableStateOf(0) }
+
+    // Load only after local network permission has been granted.
+    LaunchedEffect(localNetworkGranted, retryCount) {
+        if (!localNetworkGranted) {
+            equipment = emptyList()
+            isLoading = false
+            loadFailed = false
+            return@LaunchedEffect
+        }
+
+        isLoading = true
+        loadFailed = false
+        try {
+            equipment = ApiClient.equipmentApi.getEquipment().equipment
+        } catch (error: Exception) {
+            loadFailed = true
+            equipment = emptyList()
+        } finally {
+            isLoading = false
+        }
+    }
+
     // filter the list from what the user types in the search
-    val visibleItems = sampleEquipment.filter {
+    val visibleItems = equipment.filter {
         it.name.contains(searchText, ignoreCase = true)
     }
 
@@ -140,13 +172,75 @@ fun HomeScreen(onEquipmentClick: () -> Unit, onProfileClick: () -> Unit) {
 
         Spacer(Modifier.height(12.dp))
 
-        //  list of equipment cards
-        LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            items(visibleItems) { item ->
-                EquipmentCard(item, onClick = onEquipmentClick)
+        when {
+            !localNetworkGranted -> {
+                MessageWithButton(
+                    message = stringResource(R.string.local_network_required),
+                    buttonText = stringResource(R.string.allow_local_network),
+                    onClick = onRequestPermission
+                )
+            }
+
+            isLoading -> {
+                LoadingEquipment()
+            }
+
+            loadFailed -> {
+                MessageWithButton(
+                    message = stringResource(R.string.equipment_error),
+                    buttonText = stringResource(R.string.retry_button),
+                    onClick = { retryCount += 1 }
+                )
+            }
+
+            else -> {
+                LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    items(visibleItems, key = { it.id }) { item ->
+                        EquipmentCard(item, onClick = onEquipmentClick)
+                    }
+                }
             }
         }
     }
+}
+
+@Composable
+private fun LoadingEquipment() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        CircularProgressIndicator(color = DarkText)
+        Spacer(Modifier.height(12.dp))
+        Text(stringResource(R.string.loading_equipment), color = MutedText, fontSize = 14.sp)
+    }
+}
+
+@Composable
+private fun MessageWithButton(message: String, buttonText: String, onClick: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            message,
+            color = MutedText,
+            fontSize = 14.sp,
+            textAlign = TextAlign.Center
+        )
+        Spacer(Modifier.height(12.dp))
+        Button(onClick = onClick) {
+            Text(buttonText)
+        }
+    }
+}
+
+private fun displayStatus(status: String): String {
+    return status.replace("_", " ").replaceFirstChar { it.uppercase() }
 }
 
 @Composable
@@ -173,7 +267,7 @@ fun EquipmentCard(item: Equipment, onClick: () -> Unit) {
                     color = MutedText
                 )
             }
-            StatusPill(item.status, reserved = item.status == "Reserved")
+            StatusPill(displayStatus(item.status), reserved = item.status != "available")
         }
     }
 }

@@ -16,6 +16,11 @@
     <string name="category_computers">Computers</string>
     <string name="equipment_section">Equipment</string>
     <string name="equipment_label">EQUIPMENT</string>
+    <string name="loading_equipment">Loading equipment…</string>
+    <string name="equipment_error">Could not load equipment. Please try again.</string>
+    <string name="retry_button">RETRY</string>
+    <string name="local_network_required">Local network access is required to load equipment.</string>
+    <string name="allow_local_network">ALLOW ACCESS</string>
 
     <!-- Details -->
     <string name="details_title">Equipment Details</string>
